@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 import {
   View,
   StyleSheet,
@@ -7,35 +7,43 @@ import {
   TouchableOpacity,
   Platform,
   UIManager,
-  LayoutAnimation,
-} from 'react-native';
+  LayoutAnimation
+} from 'react-native'
 
-import userpic from '../assets/userpic.png';
+import userpic from '../assets/userpic.png'
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
+    UIManager.setLayoutAnimationEnabledExperimental(true)
   }
 }
 
-const Card = ({item}) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Card = ({ item, handleCardOpen, setCurrentUserId, index }) => {
+  const [isOpen, setIsOpen] = useState(false)
 
   const handlePress = () => {
-    setIsOpen(!isOpen);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-  };
+    setIsOpen(!isOpen)
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+  }
+
+  const handleModalOpen = () => {
+    setCurrentUserId(index)
+    handleCardOpen()
+  }
 
   return (
     <TouchableOpacity
       onPress={handlePress}
-      style={[styles.cardStyle, {height: isOpen ? 190 : 100}]}>
+      style={[styles.cardStyle, { height: isOpen ? 190 : 100 }]}
+    >
       <View style={styles.mainBox}>
         <View style={styles.styleIco}>
-          <Image style={styles.iconStyle} source={userpic} />
+          <TouchableOpacity onPress={handleModalOpen}>
+            <Image style={styles.iconStyle} source={userpic} />
+          </TouchableOpacity>
         </View>
         <View style={styles.titleBox}>
-          <Text style={styles.nameStyle}>{item.name}</Text>
+          <Text style={styles.nameStyle}>{item.name.first}</Text>
           <Text style={styles.phoneStyle}>{item.phone}</Text>
         </View>
       </View>
@@ -46,7 +54,7 @@ const Card = ({item}) => {
               <View style={styles.spacer} />
               <View style={styles.infoBox}>
                 <Text style={styles.infoTitle}>ADDRESS</Text>
-                <Text style={styles.infoContent}>{item.address.city}</Text>
+                <Text style={styles.infoContent}>{item.location.city}</Text>
               </View>
             </View>
           </View>
@@ -62,74 +70,74 @@ const Card = ({item}) => {
         </>
       )}
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   cardStyle: {
     width: 363,
     backgroundColor: '#E5E5E5',
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 20
   },
   nameStyle: {
     fontSize: 21,
     fontWeight: '700',
-    color: '#00ADD3',
+    color: '#00ADD3'
   },
   styleIco: {
     flex: 3,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   mainBox: {
     flexDirection: 'row',
-    paddingTop: 20,
+    paddingTop: 20
   },
   phoneStyle: {
     fontSize: 15,
     fontWeight: '400',
-    color: '#00ADD3',
+    color: '#00ADD3'
   },
   titleBox: {
     flex: 6,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   infoTitle: {
     fontSize: 12,
     fontWeight: '800',
-    color: '#00ADD3',
+    color: '#00ADD3'
   },
   infoContent: {
     fontSize: 12,
     fontWeight: '400',
-    color: '#0A0A0A',
+    color: '#0A0A0A'
   },
   addresBox: {
     paddingTop: 10,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   iconStyle: {
     width: 60,
     height: 60,
     borderWidth: 5,
     borderColor: '#00ADD3',
-    borderRadius: 30,
+    borderRadius: 30
   },
   infoBox: {
-    flex: 6,
+    flex: 6
   },
   spacer: {
-    flex: 3,
+    flex: 3
   },
   scrollStyle: {
-    flex: 1,
+    flex: 1
   },
   scrollContainer: {
     paddingTop: 100,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    justifyContent: 'center'
+  }
+})
 
-export default Card;
+export default Card

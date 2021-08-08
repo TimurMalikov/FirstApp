@@ -1,40 +1,45 @@
-import React from 'react';
-import {Text, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React from 'react'
+import { Text, SafeAreaView, StyleSheet, View } from 'react-native'
+import RoundedButton from './RoundedButton'
+import ButtonText from './ButtonText'
 
-const Header = ({title}) => {
-  const navigation = useNavigation();
-
-  return (
-    <SafeAreaView style={styles.headerStyle}>
-      {title !== 'Contacts' && (
-        <TouchableOpacity
-          style={styles.buttonBack}
-          onPress={() => navigation.goBack()}
-        />
+const Header = ({ title, setModalVisible, buttonTitle }) => (
+  <SafeAreaView style={styles.headerStyle}>
+    {title === 'Modal' ? (
+      <View style={styles.leftBox} />
+      ) : (
+        <View style={styles.leftBox}>
+          {title !== 'Contacts' && <RoundedButton color={title === 'Gallery' ? 'white' : '#00ADD3'} />}
+          <Text style={title === 'Gallery' ? styles.headerTextWhite : styles.headerTextBlack}>{title}</Text>
+        </View>
       )}
-      <Text style={styles.headerText}>{title}</Text>
-    </SafeAreaView>
-  );
-};
+    {title === 'Contacts' && <ButtonText title="Press" onPress={setModalVisible} />}
+    {title === 'Modal' && <ButtonText title="Close" onPress={setModalVisible} />}
+    {title === 'Gallery' && <ButtonText title={buttonTitle} onPress={setModalVisible} />}
+  </SafeAreaView>
+)
 
 const styles = StyleSheet.create({
   headerStyle: {
     marginHorizontal: 25,
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end'
   },
-  headerText: {
+  headerTextBlack: {
     fontSize: 40,
     fontWeight: '200',
+    color: 'black'
   },
-  buttonBack: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#00ADD3',
-    marginRight: 10,
+  headerTextWhite: {
+    fontSize: 40,
+    fontWeight: '200',
+    color: 'white'
   },
-});
+  leftBox: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  }
+})
 
-export default Header;
+export default Header

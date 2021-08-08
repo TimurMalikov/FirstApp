@@ -1,25 +1,31 @@
-import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-//import {useNavigation} from '@react-navigation/native';
+import React from 'react'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { useLogin } from '../context'
 
-const screenStrings = ['Screen 1', 'Screen 2'];
+const screenStrings = ['Screen 1', 'Screen 2']
 
-const Tabbar = ({navigation, state}) => {
+const Tabbar = ({ navigation, state }) => {
+  const { isLogin } = useLogin()
   if (state.index === 1 || state.index === 2)
-  return null;
-  // const navigation = useNavigation();
+  return null
+
+  const handleNavigate = item => {
+    isLogin && item === 'Screen 2' ? navigation.navigate('Screen 3') : navigation.navigate(item)
+  }
+
   return (
     <View style={styles.tabStyle}>
       {screenStrings.map((item, index) => (
         <TouchableOpacity
           style={styles.buttonTabStyle}
-          onPress={() => navigation.navigate(item)}>
+          onPress={() => handleNavigate(item)}
+        >
           <Text style={styles.tabText}>{item.toUpperCase()}</Text>
         </TouchableOpacity>
       ))}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   tabStyle: {
@@ -33,17 +39,17 @@ const styles = StyleSheet.create({
     bottom: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   tabText: {
     fontSize: 15,
     fontWeight: '700',
     color: '#FFFFFF',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   buttonTabStyle: {
-    flex: 1,
-  },
-});
+    flex: 1
+  }
+})
 
-export default Tabbar;
+export default Tabbar

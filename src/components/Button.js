@@ -1,11 +1,11 @@
-import React from 'react';
-import {StyleSheet, TouchableOpacity, Text} from 'react-native';
+import React from 'react'
+import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-const Button = ({handleSecure, title}) => (
+const Button = ({ handleSecure, title }) => (
   <TouchableOpacity style={styles.buttonStyle} onPress={handleSecure}>
     <Text style={styles.buttonText}>{title.toUpperCase()}</Text>
   </TouchableOpacity>
-);
+)
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#00ADD3',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 450
   },
   buttonText: {
     color: 'white',
-    fontSize: 15,
-  },
-});
+    fontSize: 15
+  }
+})
 
-export default Button;
+export default Button
